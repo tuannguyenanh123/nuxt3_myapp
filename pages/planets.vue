@@ -36,17 +36,17 @@
       v-on:ok="addNewItem"
       v-on:cancel="resetCreatedItem"
     >
-      <!-- <va-form ref="formRef">
-      <va-input
-        v-for="key in Object.keys(createdItem.value)"
-        :rules="[(value) => (value && value.length > 0) || `${value} is required`]"
-        v-bind:key="key"
-        v-model="createdItem.value[key]"
-        v-bind:label="key"
-        v-bind:placeholder="key"
-      />
-    </va-form> -->
-      <form v-bind:createdItem="createdItem.value" />
+      <va-form ref="formRef">
+        <va-input
+          v-for="key in Object.keys(createdItem.value)"
+          v-bind:key="key"
+          v-model="createdItem.value[key]"
+          v-bind:rules="[(value) => (value && value.length > 0) || `${value} is required`]"
+          v-bind:label="key"
+          v-bind:placeholder="key"
+        />
+      </va-form>
+      <!-- <form v-bind:createdItem="createdItem.value" /> -->
     </va-modal>
 
     <!-- Modal Edit Planet -->
@@ -218,7 +218,7 @@ function openModalToDeleteItemById(id) {
 async function handleChangeSearch(e) {
   router.push({ query: { s: e.target.value } })
   await planetStore.fetchPlanets()
-  const updatePlanets = (planetStore?.planetData).filter((planet) =>
+  const updatePlanets = planetStore.planetData.filter((planet) =>
     planet.title.toLowerCase().includes(e.target.value.toLowerCase())
   )
   items.data = updatePlanets
@@ -263,6 +263,31 @@ function getCellBind(cell, row, column) {
     margin: 20px 0;
   }
   .form-edit {
+  }
+}
+
+.table-inline {
+  &__cell {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
+
+  &__item {
+    cursor: pointer;
+
+    &--hidden {
+      z-index: -1;
+      opacity: 0;
+      pointer-events: none;
+    }
+  }
+
+  .va-input {
+    position: absolute;
+    width: 100%;
   }
 }
 </style>

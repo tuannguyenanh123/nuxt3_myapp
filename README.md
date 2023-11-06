@@ -11,6 +11,7 @@
 - [Yarn](https://www.npmjs.com/package/yarn)
 - [Git](https://git-scm.com/downloads)
 - Add setting visual code:
+
 ```bash
    {
    "eslint.alwaysShowStatus": true,
@@ -49,7 +50,7 @@ $ yarn generate
 # Server
 
 - Local: http://localhost:3000/
-- Dev: 
+- Dev:
 
 # Account
 
@@ -59,7 +60,7 @@ $ yarn generate
 - Use scss scoped
 - Mix scss when there are multiple css in common use
 - Create a file and import it for the screen. Name the file based on the screen name.
-Ex: `HomePage.scss` `SettingPage.vue` 
+  Ex: `HomePage.scss` `SettingPage.vue`
 - The distance between two functions is 1 enter
 - Limit the use of const, let, var
 - File names must be multiple words

@@ -9,7 +9,7 @@ module.exports = {
     requireConfigFile: false,
     ecmaVersion: 'latest'
   },
-  extends: ['@nuxt/eslint-config', 'plugin:prettier/recommended'],
+  extends: ['eslint:recommended', '@nuxt/eslint-config', 'prettier'],
   plugins: ['prettier'],
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
