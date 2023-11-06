@@ -1,54 +1,54 @@
 <template>
   <ClientOnly>
-   <div class="container">
-    <div class="form">
+    <div class="container">
+      <div class="form">
         <h5 class="va-h5 title">Task List</h5>
         <div class="form-wrapper">
           <BaseInput
             id="task"
+            v-model="modelValue"
             class="mb-4"
             type="task"
-            v-model="modelValue"
-            @updateValue="handleUpdateValue"
-            @keyup.enter="addTask"
+            v-on:update-value="handleUpdateValue"
+            v-on:keyup.enter="addTask"
           />
-          <va-button preset="primary" class="mr-6 mb-2" @click="addTask"> Add Task </va-button>
+          <va-button preset="primary" class="mr-6 mb-2" v-on:click="addTask"> Add Task </va-button>
         </div>
       </div>
       <div>
-        <va-input @change="handleChangeSearch" v-model="valueSearch" placeholder="Search..." />
+        <va-input v-model="valueSearch" placeholder="Search..." v-on:change="handleChangeSearch" />
       </div>
-   </div>
+    </div>
     <hr />
     <hr />
     <div class="tasks">
-      <va-card v-for="task in state.tasks" :key="task.id" class="task">
+      <va-card v-for="task in state.tasks" v-bind:key="task.id" class="task">
         <va-card-title>Title</va-card-title>
         <va-card-content v-if="!(taskEdited.isEdit && task.id === taskEdited.task.id)">
           {{ task.title }}
         </va-card-content>
         <BaseInput
+          v-if="taskEdited.isEdit && task.id === taskEdited.task.id"
           id="taskEdit"
+          v-model="modelValueEdit"
           class="mb-4 task-input"
           type="taskEdit"
-          v-if="taskEdited.isEdit && task.id === taskEdited.task.id"
-          v-model="modelValueEdit"
-          @updateValue="handleUpdateValueEdit"
-          @keyup.enter="saveTask(task)"
+          v-on:update-value="handleUpdateValueEdit"
+          v-on:keyup.enter="saveTask(task)"
         />
         <va-card-actions align="right">
-          <va-button @click="deleteTask(task.id)">Delete</va-button>
+          <va-button v-on:click="deleteTask(task.id)">Delete</va-button>
         </va-card-actions>
         <va-card-actions align="right">
-          <va-button v-if="!taskEdited.isEdit" @click="editTask(task)">Edit</va-button>
+          <va-button v-if="!taskEdited.isEdit" v-on:click="editTask(task)">Edit</va-button>
           <va-button
             v-if="taskEdited.isEdit && task.id === taskEdited.task.id"
-            @click="cancelEditTask()"
+            v-on:click="cancelEditTask()"
             >Cancel</va-button
           >
           <va-button
             v-if="taskEdited.isEdit && task.id === taskEdited.task.id"
-            @click="saveTask(task)"
+            v-on:click="saveTask(task)"
             >Save</va-button
           >
         </va-card-actions>
@@ -121,40 +121,40 @@ function handleUpdateValueEdit(item) {
 }
 
 function handleChangeSearch(e) {
-    if (e.target.value === "") {
-        state.tasks = dummyData   
-    }; 
-    const updateTasks = state.tasks.filter((task) => task.title.toLowerCase().includes(e.target.value.toLowerCase()))
-    state.tasks = updateTasks
+  if (e.target.value === '') {
+    state.tasks = dummyData
+  }
+  const updateTasks = state.tasks.filter((task) =>
+    task.title.toLowerCase().includes(e.target.value.toLowerCase())
+  )
+  state.tasks = updateTasks
 }
-
 </script>
 
 <style lang="scss" scoped>
-
-.container{
-    display: flex;
-     align-items: center;
-     justify-content: space-between;
-     padding: 0 20px;
-    .form {
-      &-wrapper {
-        padding: 20px;
-        padding-left: 0;
-        display: flex;
-        gap: 20px;
-        justify-content: start;
-        align-items: center;
-      }
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  .form {
+    &-wrapper {
+      padding: 20px;
+      padding-left: 0;
+      display: flex;
+      gap: 20px;
+      justify-content: start;
+      align-items: center;
     }
+  }
 }
 .tasks {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  .task{
+  .task {
     &-input {
-        padding-left: 20px;
+      padding-left: 20px;
     }
   }
 }
